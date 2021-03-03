@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import unittest
+import time 
 
 class NewVisitorTest(unittest.TestCase):
 
@@ -36,15 +37,13 @@ class NewVisitorTest(unittest.TestCase):
         # "1: Buy peacock feathers" as an item in a to-do list.
         inputbox.send_keys(Keys.ENTER)
 
+        print("self.browser.page_source".upper() + self.browser.page_source) 
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertTrue(
-                any(row.text == '1: Buy peacock feathers' for row in rows),
-                "New to-do item did not appear in table"
-        )
+        self.assertIn('Buy peacock feathers', [row.text for row in rows])
+
         # There is still a text box inviting here to add another item. She
         # enters "Use peacock feathers to make a fly" (Edith is very methodical)
-        self.fail('Finish the test!')
 
         # The page updates again, and now shows both items on here list
         # Edith wonders whether the site will remember her list. Then she sees
