@@ -42,8 +42,8 @@ class NewVisitorTest(LiveServerTestCase):
         # When she hits enter, the page updates, and now the page list
         # "1: Buy peacock feathers" as an item in a to-do list.
         inputbox.send_keys(Keys.ENTER)
-        edith_list_url = self.browser.current_url
         time.sleep(2)
+        edith_list_url = self.browser.current_url
         self.assertRegex(edith_list_url, '/lists/.+')
         self.check_for_row_in_list_table('1: Buy peacock feathers')
 
@@ -55,8 +55,8 @@ class NewVisitorTest(LiveServerTestCase):
         time.sleep(2)
 
         # The page updates again, and now shows both items on here list
-        self.check_for_row_in_list_table('Buy peacock feathers')
-        self.check_for_row_in_list_table('Use peacock feathers to make a fly')
+        self.check_for_row_in_list_table('1: Buy peacock feathers')
+        self.check_for_row_in_list_table('2: Use peacock feathers to make a fly')
 
         # Now a new, Francis, comes along to the site.
 
