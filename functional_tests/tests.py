@@ -1,4 +1,7 @@
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from django.test import LiveServerTestCase
 import unittest
@@ -42,7 +45,9 @@ class NewVisitorTest(LiveServerTestCase):
         # When she hits enter, the page updates, and now the page list
         # "1: Buy peacock feathers" as an item in a to-do list.
         inputbox.send_keys(Keys.ENTER)
-        time.sleep(2)
+        WebDriverWait(self.browser, 10).until(
+            EC.presence_of_element_located((By.ID, 'id_list_table'))
+        )
         edith_list_url = self.browser.current_url
         self.assertRegex(edith_list_url, '/lists/.+')
         self.check_for_row_in_list_table('1: Buy peacock feathers')
@@ -52,7 +57,7 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Use peacock feathers to make fly')
         inputbox.send_keys(Keys.ENTER)
-        time.sleep(2)
+        time.sleep(1)
 
         # The page updates again, and now shows both items on here list
         self.check_for_row_in_list_table('1: Buy peacock feathers')
@@ -88,6 +93,29 @@ class NewVisitorTest(LiveServerTestCase):
         page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Buy peacock feathers', page_text)
         self.assertIn('Buy milk', page_text)
+
+    def test_layout_and_styling(self):
+        # Edith goes to the home page
+        self.browser.get(self.live_server_url)
+        self.browser.set_window_size(1024, 768)
+
+        # She notices the input box is nicely centered
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(
+            inputbox.location['x'] + inputbox.size['width'] / 2,
+            512,
+            delta=5
+        )
+
+        # She starts a new list and sees the input is nicely
+        # centered there too
+        inputbox.send_keys('testing\n')
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(
+            inputbox.location['x'] + inputbox.size['width'] / 2,
+            512,
+            delta=5
+        )
 
         # Satisfied, they goes back to sleep
         # self.fail('Finish the test!')
