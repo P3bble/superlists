@@ -56,7 +56,7 @@ class NewVisitorTest(LiveServerTestCase):
 
         # The page updates again, and now shows both items on here list
         self.check_for_row_in_list_table('1: Buy peacock feathers')
-        self.check_for_row_in_list_table('2: Use peacock feathers to make a fly')
+        self.check_for_row_in_list_table('2: Use peacock feathers to make fly')
 
         # Now a new, Francis, comes along to the site.
 
@@ -77,6 +77,7 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Buy milk')
         inputbox.send_keys(Keys.ENTER)
+        time.sleep(2)
 
         # Francis gets his own unique URL
         francis_list_url = self.browser.current_url
@@ -89,7 +90,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertIn('Buy milk', page_text)
 
         # Satisfied, they goes back to sleep
-        self.fail('Finish the test!')
+        # self.fail('Finish the test!')
 
 if __name__ == '__main__':
     unittest.main()
