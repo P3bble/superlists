@@ -3,11 +3,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase 
 import unittest
 import time 
 
-class NewVisitorTest(LiveServerTestCase):
+class NewVisitorTest(StaticLiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Firefox()
@@ -45,9 +45,7 @@ class NewVisitorTest(LiveServerTestCase):
         # When she hits enter, the page updates, and now the page list
         # "1: Buy peacock feathers" as an item in a to-do list.
         inputbox.send_keys(Keys.ENTER)
-        WebDriverWait(self.browser, 10).until(
-            EC.presence_of_element_located((By.ID, 'id_list_table'))
-        )
+        time.sleep(2)
         edith_list_url = self.browser.current_url
         self.assertRegex(edith_list_url, '/lists/.+')
         self.check_for_row_in_list_table('1: Buy peacock feathers')

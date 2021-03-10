@@ -3,3 +3,12 @@ __pycache__
 *.pyc
 db.sqlite3
 geckodriver.log
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
