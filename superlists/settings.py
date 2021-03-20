@@ -17,10 +17,12 @@ import os
 mimetypes.add_type("text/css", ".css", True) 
 mimetypes.add_type("text/html", ".html", True)
 
+def parent(p):
+    return os.path.normpath(os.path.join(p, os.pardir))
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -79,10 +81,12 @@ WSGI_APPLICATION = 'superlists.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+DB_PATH = parent(BASE_DIR)
+print('DB_PATH: ' + DB_PATH)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': DB_PATH + '/database/db.sqlite3',
     }
 }
 
