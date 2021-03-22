@@ -32,7 +32,7 @@ SECRET_KEY = 'a1ny!t(0)g3dye*gr72v*hykg2&-=b#qiwt(v&@#d2k(200=ht'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['tlist-staging.xyz','167.172.159.175']
 
 
 # Application definition
