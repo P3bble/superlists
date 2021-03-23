@@ -3,6 +3,8 @@ from fabric.contrib.files import append, exists, sed
 from fabric.api import env, local, run
 import random
 
+# Adding a comment to enable a specific save in page 198 of the book.
+
 REPO_URL = 'https://github.com/P3bble/superlists.git'
 
 def deploy():
